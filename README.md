@@ -23,6 +23,9 @@ Open-source web app to help NYC residents prepare pothole complaints faster by c
 
 ```bash
 npm install
+cp packages/server/.env.example packages/server/.env
+cp packages/web/.env.example packages/web/.env
+npm run prisma:migrate -w packages/server
 npm run dev
 ```
 
