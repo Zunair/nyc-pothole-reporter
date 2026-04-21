@@ -3,6 +3,9 @@ import { ComplaintDto } from '../domain/Complaint'
 import { ComplaintRepository } from './ComplaintRepository'
 
 const prisma = new PrismaClient()
+type PersistedComplaint = Awaited<ReturnType<typeof prisma.complaint.findMany>>[number]
+type PersistedPhoto = PersistedComplaint['photos'][number]
+type PersistedStatusEvent = PersistedComplaint['statusEvents'][number]
 
 export class SqliteComplaintRepository extends ComplaintRepository {
   async save(complaint: ComplaintDto): Promise<void> {
@@ -88,7 +91,7 @@ export class SqliteComplaintRepository extends ComplaintRepository {
       },
     })
 
-    return complaints.map((complaint: (typeof complaints)[number]) => ({
+    return complaints.map((complaint: PersistedComplaint) => ({
       id: complaint.id,
       address: complaint.address,
       borough: complaint.borough,
@@ -108,14 +111,14 @@ export class SqliteComplaintRepository extends ComplaintRepository {
               displayAddress: complaint.displayAddress,
             }
           : undefined,
-      photos: complaint.photos.map((photo: (typeof complaint.photos)[number]) => ({
+      photos: complaint.photos.map((photo: PersistedPhoto) => ({
         id: photo.id,
         dataUrl: photo.dataUrl,
         mimeType: photo.mimeType,
         createdAt: photo.createdAt.toISOString(),
       })),
       status: complaint.status as ComplaintDto['status'],
-      statusHistory: complaint.statusEvents.map((event: (typeof complaint.statusEvents)[number]) => ({
+      statusHistory: complaint.statusEvents.map((event: PersistedStatusEvent) => ({
         status: event.status as ComplaintDto['status'],
         createdAt: event.createdAt.toISOString(),
         note: event.note ?? undefined,
