@@ -38,4 +38,4 @@ This starts:
 
 ## Screenshot
 
-![NYC Pothole Reporter Assistant screenshot](https://github.com/user-attachments/assets/84e9a84f-93f1-491d-af88-b0d403d45ff5)
+Screenshot is included in the PR description.
