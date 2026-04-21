@@ -88,7 +88,7 @@ export class SqliteComplaintRepository extends ComplaintRepository {
       },
     })
 
-    return complaints.map((complaint) => ({
+    return complaints.map((complaint: (typeof complaints)[number]) => ({
       id: complaint.id,
       address: complaint.address,
       borough: complaint.borough,
@@ -108,14 +108,14 @@ export class SqliteComplaintRepository extends ComplaintRepository {
               displayAddress: complaint.displayAddress,
             }
           : undefined,
-      photos: complaint.photos.map((photo) => ({
+      photos: complaint.photos.map((photo: (typeof complaint.photos)[number]) => ({
         id: photo.id,
         dataUrl: photo.dataUrl,
         mimeType: photo.mimeType,
         createdAt: photo.createdAt.toISOString(),
       })),
       status: complaint.status as ComplaintDto['status'],
-      statusHistory: complaint.statusEvents.map((event) => ({
+      statusHistory: complaint.statusEvents.map((event: (typeof complaint.statusEvents)[number]) => ({
         status: event.status as ComplaintDto['status'],
         createdAt: event.createdAt.toISOString(),
         note: event.note ?? undefined,
