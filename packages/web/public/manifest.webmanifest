@@ -1,0 +1,9 @@
+{
+  "name": "NYC Pothole Reporter Assistant",
+  "short_name": "PotholeAssist",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a3d62",
+  "icons": []
+}
