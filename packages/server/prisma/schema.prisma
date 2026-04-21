@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Complaint {
+  id               String        @id
+  address          String
+  borough          String
+  crossStreets     String
+  description      String
+  locationOnStreet String
+  contactName      String?
+  contactEmail     String?
+  contactPhone     String?
+  latitude         Float?
+  longitude        Float?
+  displayAddress   String?
+  status           String
+  createdAt        DateTime
+  updatedAt        DateTime
+  photos           Photo[]
+  statusEvents     StatusEvent[]
+}
+
+model Photo {
+  id          String   @id
+  complaintId String
+  dataUrl     String
+  mimeType    String
+  createdAt   DateTime
+  complaint   Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+}
+
+model StatusEvent {
+  id          String   @id
+  complaintId String
+  status      String
+  note        String?
+  createdAt   DateTime
+  complaint   Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+}
